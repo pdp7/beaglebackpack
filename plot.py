@@ -1,14 +1,21 @@
 #!/usr/bin/python
+# AUTHOR: Drew Fustini
+# DESC: BeagleBone Black demo: Plot ADC samples on Adafruit 8x8 Bi-Color LED Matrix
+# README: https://github.com/pdp7/beaglebackpack/blob/master/README.md
+# LICENSE: Creative Commons CC0 http://creativecommons.org/choose/zero/
 
+# refer to https://github.com/adafruit/Adafruit-Raspberry-Pi-Python-Code/
+from Adafruit_8x8 import ColorEightByEight
+# refer to https://github.com/adafruit/PyBBIO
 import Adafruit_BBIO.ADC as ADC
 import random
 import time
 import datetime
-from Adafruit_8x8 import ColorEightByEight
 
-ADC.setup()
+# Enable debug output
+DEBUG = True
 
-grid = ColorEightByEight(address=0x70)
+# display buffer to represent the 8x8 LED matrix
 matrix = [ [0,0,0,0,0,0,0,0],
            [0,0,0,0,0,0,0,0],
            [0,0,0,0,0,0,0,0],
@@ -18,11 +25,16 @@ matrix = [ [0,0,0,0,0,0,0,0],
            [0,0,0,0,0,0,0,0],
            [0,0,0,0,0,0,0,0] ]
 
+grid = ColorEightByEight(address=0x70)
+
+# clear matrix
 for x in range(0, 8):
    for y in range(0, 8):
        grid.setPixel(x, y, 0)
  
-# Continually update the 8x8 display one pixel at a time
+ADC.setup()
+
+# continually scroll the matrix and plot new ADC sample
 while(True):
  
    for x in range(7):
@@ -35,7 +47,8 @@ while(True):
    if sample_flot > 7.5:
        sample_flot = 8
    sample = int(sample_flot)
-   print "adc_sample=", adc_sample, "sample_flot=", sample_flot, "sample=", sample
+   if DEBUG:
+       print "adc_sample=", adc_sample, "sample_flot=", sample_flot, "sample=", sample
 
    # clear column
    for i in range(8):
