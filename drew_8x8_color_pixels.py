@@ -1,9 +1,12 @@
 #!/usr/bin/python
 
+import Adafruit_BBIO.ADC as ADC
 import random
 import time
 import datetime
 from Adafruit_8x8 import ColorEightByEight
+
+ADC.setup()
 
 grid = ColorEightByEight(address=0x70)
 matrix = [ [1,1,1,1,1,0,0,0],
@@ -18,7 +21,7 @@ matrix = [ [1,1,1,1,1,0,0,0],
 for row in matrix:
     print row
 
-print "================================="
+#print "================================="
 
 samples = [1,2,3,4,5,6,7,8, 8,7,6,5,4,3,2,1, 8,1,8,1,8,1,8,1]
 
@@ -61,7 +64,14 @@ while(True):
    for x in range(7):
        for y in range(8):
            matrix[x][y] = matrix[x+1][y]
-   sample = random.randint(1,8) 
+   #sample = random.randint(1,8) 
+   adc_sample = ADC.read("P9_40")
+   #print "adc_sample=", adc_sample
+   if adc_sample>1:
+       adc_sample=1
+       print "MAX adc_sample=", adc_sample
+   print "adc_sample*8=", adc_sample*8
+   sample = int(adc_sample*8)
    print "sample=", sample
    for i in range(8):
        #nprint "i=", i
@@ -86,17 +96,17 @@ while(True):
                #matrix[i][7] = color
      
    for row in matrix:
-       print "row: ", row
+       #print "row: ", row
        for x in range(8):
            for y in range(8):
                #print "matrix[", x, ",", y, "]=", matrix[x][y]
                if(matrix[x][y]==1):
-                   grid.setPixel(x, y, 1)
+                   grid.setPixel(y, x, 1)
                else:
-                   grid.setPixel(x, y, 0)
+                   grid.setPixel(y, x, 0)
       
 
-   print "============"
+   #print "============"
    ##time.sleep(0.1)
 
 
