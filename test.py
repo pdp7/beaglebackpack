@@ -1,0 +1,7 @@
+import facebook
+
+access_token = "CAACEdEose0cBAN2cyZChoQdmgdBIoyZA2e1MkW2eU7ZBiR7Bx9EgN6waZB5bP8fROoHTbRW9tUnDThQ779Xsbv3nTx9NoxO3GqWT31TwDkiOzmgZAvrmZC3gE3ZAKZAfKJ9vKmNBxMIeZAJQQaNULHKEXPZAfJWFL5fAAgV5xYU2KrZCTMpu7iDHyUybIHW7Y2XZBUmNiTLYHiy2igZDZD"
+graph = facebook.GraphAPI(access_token)
+notifications  = graph.get_object("me/notifications")
+print notifications['summary']['unseen_count']
+
