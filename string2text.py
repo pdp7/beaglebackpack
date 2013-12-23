@@ -22,14 +22,16 @@ class Text2LED():
         '''
         string = string.upper()
         matrixOfText = []
-        for l in string:
-            matrixOfText.append([matrix for (letter, matrix) in \
-                    myalphabet if letter == l])
+        for letter in string:
+	    matrixOfText.append(myalphabet[letter])
         return matrixOfText
      
     def get_column(self, matrix, i):
+	column = []
+	for row in matrix:
+	     column.append(row[i])
         '''returns a single column from a matrix'''
-        return [row[:,i] for row in matrix]
+	return column
      
     def matrix_to_column_list(self, text):
         text2tick = {}
@@ -47,31 +49,13 @@ class Text2LED():
     def add_to_ticker(self, string, color="green"):
         ticker = []
         text2tick = self.matrix_to_column_list(self.map_string_to_matrix(string))
-        for i in range(len(text2tick)):
-            print "i: ", i,": ",text2tick[i]
-            total = 0
-            display = []
-            for list in text2tick[i]:
-		print "list: ", list
-                for index, item in enumerate(list):
-                    print(index, item)
-                    if index == 0 and item != 0:
-                        total += 1
-                    if index == 1 and item != 0:
-                        total += 2
-                    if index == 2 and item != 0:
-                        total += 4
-                    if index == 3 and item != 0:
-                        total += 8
-                    if index == 4 and item != 0:
-                        total += 16
-                    if index == 5 and item != 0:
-                        total += 32
-                    if index == 6 and item != 0:
-                        total += 64
-                    if index == 7 and item != 0:
-                        total += 128
-            total = total  #* color 
+	total = 0
+	for i in text2tick.keys():
+	    display = []
+	    total = 0
+	    for n in range(0, 8):
+		if(text2tick[i][n] == 1):
+                    total = total + (2**n)
             display.append(total)
             ticker = ticker + display
         return ticker
@@ -95,8 +79,16 @@ class LED_TICKER():
             sleep(0.05)
              
     def update_ticker_w_buffer(self):
-        self.grid1.disp.writeMyDisplay(self.buffer[0:8])
-        self.grid2.disp.writeMyDisplay(self.buffer[8:16])
+	n = 0
+	for row in self.buffer[0:8]:
+	    self.grid1.disp.setBufferRow(n, row, False)
+	    n = n + 1
+	n = 0
+	for row in self.buffer[8:16]:
+	    self.grid2.disp.setBufferRow(n, row, False)
+	    n = n + 1
+	self.grid1.disp.writeDisplay();
+	self.grid2.disp.writeDisplay();
         self.ticker[len(self.ticker):] = []
         self.buffer[len(self.buffer):] = []
         self.display[len(self.display):] = []
@@ -104,3 +96,5 @@ class LED_TICKER():
     def main(self):
         self.scrolling_ticker_text()
         self.update_ticker_w_buffer() 
+        #self.grid1.disp.clear()
+        #self.grid2.disp.clear()
