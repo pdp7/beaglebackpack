@@ -6,6 +6,7 @@ import facebook
 import sys
 from Adafruit_8x8 import EightByEight
 
+# source: https://github.com/pdp7/beaglebackpack/blob/master/README.md
 # ===========================================================================
 # title: beaglebone black with adafruit 8x8 LED matrix facebook notification display
 # author: drew fustini (http://element14.com/fustini)

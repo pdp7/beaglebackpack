@@ -4,6 +4,7 @@ import time
 import datetime
 from Adafruit_8x8 import EightByEight
 
+# source: https://github.com/pdp7/beaglebackpack/blob/master/README.md
 # ===========================================================================
 # 8x8 Pixel Example
 # ===========================================================================

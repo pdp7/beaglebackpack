@@ -1,7 +1,4 @@
-'''
-Created on Sep 10, 2013
-@author: matthassel
-'''
+# source: https://github.com/pdp7/beaglebackpack/blob/master/README.md
 myalphabet = { "A": [[0,1,1,0,0],
                      [1,0,0,1,0],
                      [1,0,0,1,0],

@@ -1,8 +1,4 @@
-'''
-Created on Sep 10, 2013
-@author: matthassel
-Example:
-'''
+# source: https://github.com/pdp7/beaglebackpack/blob/master/README.md
 from time import sleep
 import numpy as np
 from myalphabet import *

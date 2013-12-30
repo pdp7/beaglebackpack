@@ -1,7 +1,6 @@
 #!/usr/bin/python
-''' Created on Oct 10, 2013
-@author: matthassel
-'''
+# source: https://github.com/pdp7/beaglebackpack/blob/master/README.md
+
 import argparse
 import string2text as str2mat
 app_text = str2mat.Text2LED() # initialize test to test app
