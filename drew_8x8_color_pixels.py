@@ -1,34 +1,43 @@
 #!/usr/bin/python
 
+import random
 import time
 import datetime
 from Adafruit_8x8 import ColorEightByEight
 
-# ===========================================================================
-# 8x8 Pixel Example
-# ===========================================================================
 grid = ColorEightByEight(address=0x70)
+matrix = [ [1,1,1,1,1,0,0,0],
+           [1,1,0,0,0,0,0,0],
+           [1,1,1,1,0,0,0,0],
+           [1,1,1,1,1,1,1,0],
+           [1,1,1,1,1,0,0,0],
+           [1,1,1,1,1,1,0,0],
+           [1,1,1,1,1,1,1,0],
+           [1,1,1,1,1,0,0,0] ]
 
-print "Press CTRL+Z to exit"
+for row in matrix:
+    print row
+
+print "================================="
 
 samples = [1,2,3,4,5,6,7,8, 8,7,6,5,4,3,2,1, 8,1,8,1,8,1,8,1]
 
 iter = 0
 
+for x in range(0, 8):
+   for y in range(0, 8):
+       grid.setPixel(x, y, 0)
+ 
+
 # Continually update the 8x8 display one pixel at a time
 iter += 1
-
-for x in range(0, 8):
-    for y in range(0, 8):
-      grid.setPixel(x, y, 0)
-      time.sleep(0.02)
-
 while(True):
-   startMillis=0 #millis();  # Start of sample window
-   peakToPeak = 0  #peak-to-peak level
  
-   signalMax = 0
-   signalMin = 1024
+   #startMillis=0 #millis();  # Start of sample window
+   #peakToPeak = 0  #peak-to-peak level
+ 
+   #signalMax = 0
+   #signalMin = 1024
  
    #while (millis() - startMillis < sampleWindow)
       #sample = analogRead(0); 
@@ -46,10 +55,24 @@ while(True):
    #for (int i = 0; i < 7; i++)  # shift the display left
    #   matrix.displaybuffer[i] = matrix.displaybuffer[i+1];
  
+   #for row in matrix:
+   #   for i in range(len(row)-1):
+   #       row[i] = row[i+1]
+   for x in range(7):
+       for y in range(8):
+           matrix[x][y] = matrix[x+1][y]
+   sample = random.randint(1,8) 
+   print "sample=", sample
+   for i in range(8):
+       #nprint "i=", i
+       matrix[7][i] = 0
+   for i in range(sample):
+       #print "i=", i
+       matrix[7][i] = 1
+
    # set the new sample
    for a in range(0, len(samples)/8):
        for sample in samples[a*8:((a*8)+8)]:
-           print sample
            for i in range(0,8):
                if (i >= sample): 
                    color = 0
@@ -59,6 +82,21 @@ while(True):
                    color = 3
                elif (i >= 0 and i <= 3):
                    color = 1
-               print "a=", 8, " a*8=", a*8, "(a*8)+8=", (a*8)+8, " i=", i, " sample=", sample, " color=", color
-               grid.setPixel(i, 6, color)
-           time.sleep(0.2)
+               #print "a=", a, " a*8=", a*8, "(a*8)+8=", (a*8)+8, " i=", i, " sample=", sample, " color=", color
+               #matrix[i][7] = color
+     
+   for row in matrix:
+       print "row: ", row
+       for x in range(8):
+           for y in range(8):
+               #print "matrix[", x, ",", y, "]=", matrix[x][y]
+               if(matrix[x][y]==1):
+                   grid.setPixel(x, y, 1)
+               else:
+                   grid.setPixel(x, y, 0)
+      
+
+   print "============"
+   ##time.sleep(0.1)
+
+
