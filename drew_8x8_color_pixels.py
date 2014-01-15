@@ -66,12 +66,12 @@ while(True):
            matrix[x][y] = matrix[x+1][y]
    #sample = random.randint(1,8) 
    adc_sample = ADC.read("P9_40")
-   #print "adc_sample=", adc_sample
-   if adc_sample>1:
-       adc_sample=1
-       print "MAX adc_sample=", adc_sample
-   print "adc_sample*8=", adc_sample*8
-   sample = int(adc_sample*8)
+   print "adc_sample=", adc_sample
+   sample_flot = adc_sample*8.0
+   print "sample_flot=", sample_flot
+   if sample_flot > 7.5:
+       sample_flot = 8
+   sample = int(sample_flot)
    print "sample=", sample
    for i in range(8):
        #nprint "i=", i
