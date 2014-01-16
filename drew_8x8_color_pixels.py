@@ -44,11 +44,11 @@ while(True):
    # plot sample on right most column
    for i in range(sample):
        color = 0
-       if (i >= 0 and i <= 2):
+       if (i >= 0 and i <= 3):
            color = 1 #GREEN
-       elif (i > 2 and i <= 5): 
+       elif (i > 3 and i <= 6): 
            color = 3 #ORANGE/YELLOW
-       elif (i > 5 and i < 8): 
+       elif (i > 6 and i < 8): 
            color = 2 #RED
        matrix[7][i] = color
     
